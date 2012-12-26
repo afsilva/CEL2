@@ -1,4 +1,5 @@
 //Application Window Component Constructor
+
 function ApplicationWindow() {
 	//load component dependencies
 	var FirstView = require('ui/common/FirstView');

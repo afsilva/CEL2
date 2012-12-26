@@ -8,6 +8,9 @@
  * - Require and open our top-level UI component
  *  
  */
+Ti.App.statusURL = "https://openshift.redhat.com/app/status/status.json";
+//Ti.App.statusURL = "http://people.redhat.com/~ansilva/status.json";
+Ti.App.sleepTime = 1800000; // 30 minutes
 
 //bootstrap and check dependencies
 if (Ti.version < 1.8 ) {
@@ -22,23 +25,55 @@ if (Ti.version < 1.8 ) {
 		height = Ti.Platform.displayCaps.platformHeight,
 		width = Ti.Platform.displayCaps.platformWidth;
 	
-	//considering tablet to have one dimension over 900px - this is imperfect, so you should feel free to decide
-	//yourself what you consider a tablet form factor for android
-	var isTablet = osname === 'ipad' || (osname === 'android' && (width > 899 || height > 899));
-	
-	var Window;
-	if (isTablet) {
-		Window = require('ui/tablet/ApplicationWindow');
-	}
-	else {
-		// Android uses platform-specific properties to create windows.
-		// All other platforms follow a similar UI pattern.
-		if (osname === 'android') {
-			Window = require('ui/handheld/android/ApplicationWindow');
-		}
-		else {
-			Window = require('ui/handheld/ApplicationWindow');
-		}
-	}
+	Window = require('ui/handheld/ApplicationWindow');
 	new Window().open();
 })();
+
+// test for iOS 4+
+function isiOS4Plus(){
+	if (Titanium.Platform.name == 'iPhone OS'){
+		var version = Titanium.Platform.version.split(".");
+		var major = parseInt(version[0]);
+		// can only test this support on a 3.2+ device
+		if (major >= 4){
+			return true;
+		}
+	}
+	return false;
+}
+ 
+if (isiOS4Plus()){
+ 
+	var service;
+	
+	// Ti.App.iOS.addEventListener('notification',function(e){
+	// You can use this event to pick up the info of the noticiation. 
+	// Also to collect the 'userInfo' property data if any was set
+	//		Ti.API.info("local notification received: "+JSON.stringify(e));
+	//	});
+	// fired when an app resumes from suspension
+	Ti.App.addEventListener('resume',function(e){
+		Ti.API.info("app is resuming from the background");
+		Window = require('ui/handheld/ApplicationWindow');
+	    new Window().open();
+		
+	});
+	Ti.App.addEventListener('resumed',function(e){
+		Ti.API.info("app has resumed from the background");
+		// this will unregister the service if the user just opened the app
+		// is: not via the notification 'OK' button..
+		if(service!=null){
+			service.stop();
+			service.unregister();
+		}
+        Titanium.UI.iPhone.appBadge = null;
+	});
+	Ti.App.addEventListener('pause',function(e){
+		Ti.API.info("app was paused from the foreground");
+		
+		service = Ti.App.iOS.registerBackgroundService({url:'bg.js'});
+		Ti.API.info("registered background service = "+service);
+		
+	});
+}
+ 

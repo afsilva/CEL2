@@ -1,8 +1,8 @@
-#appname: Cloud Engine Light
-#publisher: ansilva
-#url: http://anderson.the-silvas.com
-#image: appicon.png
-#appid: com.andersonsilva.cel
-#desc: undefined
-#type: ipad
-#guid: f6302071-97a7-491a-8deb-e68012734392
+#appname:Cloud Engine Light
+#publisher:ansilva
+#url:http://anderson.the-silvas.com
+#image:appicon.png
+#appid:com.andersonsilva.cel
+#desc:A simple app that will alert you whenever there is an open issue with with Red Hat's Openshift PaaS service. It also provides several useful links to Openshift related information.\nYou can now configure the frequency of the check against the server.\n\nNote: This app is not associated with Red Hat or Openshift.
+#type:mobile
+#guid:f6302071-97a7-491a-8deb-e68012734392

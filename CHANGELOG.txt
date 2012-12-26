@@ -1,1 +1,8 @@
-Place your change log text here.  This file will be incorporated with your app at package time.
+Cloud Engine Light for iPhone
+
+- Original Cloud Engine Light app was developed for Android Devices: https://play.google.com/store/apps/details?id=com.andersonsilva.cel
+- As of 2012/12/26 Cloud Engine Light for iPhone supports:
+  . Links to Openshift's status page
+  . Links to social media sites like twitter, facebook and google plus
+  . Background services that checks the status of Openshift every 30 minutes
+  . If an issue is open with Openshift, notification is published on your iPhone.

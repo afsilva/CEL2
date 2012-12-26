@@ -1,4 +1,4 @@
 CEL2
 ====
 
-Cloud Engine Light v2.0
+This is the version of Cloud Engine Light for the iPhone.

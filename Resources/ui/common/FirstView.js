@@ -18,11 +18,17 @@ function FirstView() {
 			response = JSON.parse(this.responseText);
 			//response = this.responseText;
 			//alert(response.open.length);
+			
+			
 			if (response.open.length == 0) {
 				text[0] = "Openshift Status: (OK)";
 				bg = '#00611C';
 			} else {
-				text[0] = "Openshift Status: (" + response.resolved.length + ") Issues";
+				text[0] = "Openshift Status: (" + response.open.length + ") Issue";
+				if (response.open.length > 1)
+				{
+					text[0] = text[0] + "s";
+				}
 				bg = '#8B0000';
 			}
 
@@ -75,8 +81,7 @@ function FirstView() {
 		}
 	});
 
-	//checkStatus.open("GET", "https://openshift.redhat.com/app/status/status.json");
-	checkStatus.open("GET", "http://people.redhat.com/~ansilva/status.json.open");
+	checkStatus.open("GET", Ti.App.statusURL);
 	checkStatus.send();
 
 	return self;
