@@ -8,14 +8,6 @@ function FirstView() {
 	var self = Ti.UI.createView();
 	var text = Array("", "", "openshift.redhat.com", "community", "@openshift", "#openshift", "@openshift_ops", "+openshift", "openshift@facebook");
 	var links = Array("https://openshift.redhat.com/app/status", "", "https://openshift.redhat.com", "https://openshift.redhat.com/community", "https://mobile.twitter.com/openshift/", "https://mobile.twitter.com/search/openshift", "https://mobile.twitter.com/openshift_ops", "https://plus.google.com/108052331678796731786/posts", "http://www.facebook.com/openshift");
-	
-	// Official openshift status URL (use for final build)
-	//var statusURL = "https://openshift.redhat.com/app/status/status.json";
-	// Use this URL to test an open issue with Openshift
-    var statusURL = "http://people.redhat.com/~ansilva/status.json.open";
-	// Use this URL to test no open issues with Openshift
-    //var statusURL = "http://people.redhat.com/~ansilva/status.json.ok";
-	
 	var bg = "#CFCFCF";
 	// create table view data object
 	var data = [];

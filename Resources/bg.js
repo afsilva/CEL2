@@ -66,7 +66,7 @@ function checkFeed(){
 }
  
 Ti.App.iOS.addEventListener('notification',function(){
-	Ti.API.info('background event received = '+notification);
+	//Ti.API.info('background event received = '+notification);
 	Ti.App.currentService.stop();
 	Ti.App.currentService.unregister();
 });

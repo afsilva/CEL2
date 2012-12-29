@@ -6,3 +6,7 @@ Cloud Engine Light for iPhone
   . Links to social media sites like twitter, facebook and google plus
   . Background services that checks the status of Openshift every 30 minutes
   . If an issue is open with Openshift, notification is published on your iPhone.
+
+- version 1.5.2-dev
+  . Push Notification capabilities
+  . Right now it is working with only my dev device.

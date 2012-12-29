@@ -10,7 +10,12 @@
  */
 Ti.App.statusURL = "https://openshift.redhat.com/app/status/status.json";
 //Ti.App.statusURL = "http://people.redhat.com/~ansilva/status.json";
-Ti.App.sleepTime = 1800000; // 30 minutes
+// The original idea was to have the background service running every 30 minutes
+// but according to the iOS API, a background service is automatically stopped
+// after 10 minutes.
+// So, I am going to change sleep time for 4.5 minutes.
+// And start looking into Push Notifications
+Ti.App.sleepTime = 270000; // 30 minutes
 
 //bootstrap and check dependencies
 if (Ti.version < 1.8 ) {
@@ -53,13 +58,13 @@ if (isiOS4Plus()){
 	//	});
 	// fired when an app resumes from suspension
 	Ti.App.addEventListener('resume',function(e){
-		Ti.API.info("app is resuming from the background");
+		//Ti.API.info("app is resuming from the background");
 		Window = require('ui/handheld/ApplicationWindow');
 	    new Window().open();
 		
 	});
 	Ti.App.addEventListener('resumed',function(e){
-		Ti.API.info("app has resumed from the background");
+		//Ti.API.info("app has resumed from the background");
 		// this will unregister the service if the user just opened the app
 		// is: not via the notification 'OK' button..
 		if(service!=null){
@@ -69,11 +74,47 @@ if (isiOS4Plus()){
         Titanium.UI.iPhone.appBadge = null;
 	});
 	Ti.App.addEventListener('pause',function(e){
-		Ti.API.info("app was paused from the foreground");
+		//Ti.API.info("app was paused from the foreground");
 		
 		service = Ti.App.iOS.registerBackgroundService({url:'bg.js'});
-		Ti.API.info("registered background service = "+service);
+		//Ti.API.info("registered background service = "+service);
 		
 	});
 }
+
+Ti.Network.registerForPushNotifications({
+    types: [
+        Ti.Network.NOTIFICATION_TYPE_BADGE,
+        Ti.Network.NOTIFICATION_TYPE_ALERT,
+        Ti.Network.NOTIFICATION_TYPE_SOUND
+    ],
+    success:function(e) {
+    	
+    	var deviceToken = e.deviceToken;
+        Ti.API.info("Push notification device token is: "+deviceToken);
+        Ti.API.info("Push notification types: "+Titanium.Network.remoteNotificationTypes);
+        Ti.API.info("Push notification enabled: "+Titanium.Network.remoteNotificationsEnabled);
+ 
+        var request = Titanium.Network.createHTTPClient();
+        request.onload = function()
+        {
+            Ti.API.info('in utf-8 onload for POST');
+        };
+        request.onerror = function()
+        {
+            Ti.API.info('in utf-8 error for POST');
+        };
+        
+        request.open("GET", "http://push-bean2.rhcloud.com/celPushRegister.php?appversion=" + escape(Titanium.App.version) + "&deviceuid=" + escape(Titanium.Platform.id) + "&devicetoken=" + escape(e.deviceToken) + "&devicemodel=" + escape(Titanium.Platform.model) + "&deviceversion=" + escape(Titanium.Platform.version));
+        request.send();
+    	
+        //alert(e.deviceToken);
+    },
+    error:function(e) {
+        alert("Error during registration: " + e.error);
+    },
+    callback:function(e) {
+        alert("Received a push notification\nPayload:\n" + JSON.stringify(e.data));
+    }
+});
  
