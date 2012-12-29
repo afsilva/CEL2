@@ -16,7 +16,7 @@
     <sdk-version>3.0.0.GA</sdk-version>
     <id>com.andersonsilva.cel</id>
     <name>Cloud Engine Light</name>
-    <version>1.5.1</version>
+    <version>1.6.0</version>
     <publisher>Anderson Silva</publisher>
     <url>http://anderson.the-silvas.com</url>
     <description>A simple app that will alert you whenever there is an open issue with with Red Hat's Openshift PaaS service. It also provides several useful links to Openshift related information.

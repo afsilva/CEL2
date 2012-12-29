@@ -105,7 +105,7 @@ Ti.Network.registerForPushNotifications({
             Ti.API.info('in utf-8 error for POST');
         };
         
-        request.open("GET", "http://push-bean2.rhcloud.com/celPushRegister.php?appversion=" + escape(Titanium.App.version) + "&deviceuid=" + escape(Titanium.Platform.id) + "&devicetoken=" + escape(e.deviceToken) + "&devicemodel=" + escape(Titanium.Platform.model) + "&deviceversion=" + escape(Titanium.Platform.version));
+        request.open("GET", "http://push-bean2.rhcloud.com/celPushRegister.php?appVersion=" + escape(Titanium.App.version) + "&deviceUID=" + escape(Titanium.Platform.id) + "&deviceToken=" + escape(e.deviceToken) + "&deviceModel=" + escape(Titanium.Platform.model) + "&deviceVersion=" + escape(Titanium.Platform.version));
         request.send();
     	
         //alert(e.deviceToken);
